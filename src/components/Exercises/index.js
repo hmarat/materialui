@@ -1,21 +1,45 @@
-import React from "react"
-import {Grid} from "@material-ui/core"
-import RightPane from "./RightPane"
-import LeftPane from "./LeftPane"
+import React, { Fragment } from "react"
+import { Grid, Paper, List, ListItem, Typography, ListItemText } from "@material-ui/core"
 
 const styles = {
     Paper: {
-        padding: 20, marginTop:10 , marginBottom: 10
+        padding: 20,
+        marginTop: 10,
+        marginBottom: 10,
+        height: 500,
+        overflowY: "auto"
     }
 }
 
-export default props => (
+export default ({ exercises }) => (
     <Grid container spacing={2}>
         <Grid item sm>
-            <LeftPane styles={styles}/>
+            <Paper style={styles.Paper}>
+                {exercises.map(([group, exercises]) => (
+                    <Fragment>
+                        <Typography variant="h6" style={{ textTransform: "capitalize" }}>
+                            {group}
+                        </Typography>
+                        <List component="ul">
+                            {exercises.map(({ title }) => (
+                                <ListItem>
+                                    <ListItemText primary={title} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Fragment>
+                ))}
+            </Paper>
         </Grid>
         <Grid item sm>
-            <RightPane styles={styles}/>
+            <Paper style={styles.Paper}>
+                <Typography variant="h5">
+                    Welcome
+                </Typography>
+                <Typography variant="body1" style={{ marginTop: 20 }}>
+                    Please select an exercise from the list on the left.
+                </Typography>
+            </Paper>
         </Grid>
-    </Grid>
+    </Grid >
 )
