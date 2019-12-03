@@ -6,7 +6,7 @@ const Header = () => (
         <Toolbar>
             <Typography variant="h6" color="inherit">
                 Exercise database
-                </Typography>
+            </Typography>
         </Toolbar>
     </AppBar>
 )

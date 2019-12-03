@@ -9,6 +9,7 @@ export default class App extends Component {
         <Header />
 
         <Exercises />
+        
         <Footer />
 
       </Fragment>
