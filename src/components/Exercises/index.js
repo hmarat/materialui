@@ -11,35 +11,46 @@ const styles = {
     }
 }
 
-export default ({ exercises }) => (
-    <Grid container spacing={2}>
-        <Grid item sm>
-            <Paper style={styles.Paper}>
-                {exercises.map(([group, exercises]) => (
-                    <Fragment>
-                        <Typography variant="h6" style={{ textTransform: "capitalize" }}>
-                            {group}
-                        </Typography>
-                        <List component="ul">
-                            {exercises.map(({ title }) => (
-                                <ListItem>
-                                    <ListItemText primary={title} />
-                                </ListItem>
-                            ))}
-                        </List>
-                    </Fragment>
-                ))}
-            </Paper>
-        </Grid>
-        <Grid item sm>
-            <Paper style={styles.Paper}>
-                <Typography variant="h5">
-                    Welcome
-                </Typography>
-                <Typography variant="body1" style={{ marginTop: 20 }}>
-                    Please select an exercise from the list on the left.
-                </Typography>
-            </Paper>
-        </Grid>
-    </Grid >
-)
+export default ({
+    exercises,
+    category,
+    onSelect,
+    exercise: {
+        id,
+        title = "Welcome",
+        description = "Please select an exercise from the list on the left."
+    }
+}) => (
+        <Grid container spacing={2}>
+            <Grid item sm>
+                <Paper style={styles.Paper}>
+                    {exercises.map(([group, exercises]) => (
+                        !category || category === group ?
+                            <Fragment l>
+                                <Typography variant="h6" style={{ textTransform: "capitalize" }}>
+                                    {group}
+                                </Typography>
+                                <List component="ul">
+                                    {exercises.map(({ title, id }) => (
+                                        <ListItem button onClick={() => onSelect(id)}>
+                                            <ListItemText primary={title} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Fragment>
+                            : null
+                    ))}
+                </Paper>
+            </Grid>
+            <Grid item sm>
+                <Paper style={styles.Paper}>
+                    <Typography variant="h5">
+                        {title}
+                    </Typography>
+                    <Typography variant="body1" style={{ marginTop: 20 }}>
+                        {description}
+                    </Typography>
+                </Paper>
+            </Grid>
+        </Grid >
+    )
