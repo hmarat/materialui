@@ -6,7 +6,8 @@ import { muscles, exercises } from "../store"
 export default class App extends Component {
   state = {
     exercises,
-    exercise: {}
+    exercise: {},
+    editMode: false
   }
 
   getExercisesByMuscles() {
@@ -14,7 +15,7 @@ export default class App extends Component {
       ...exercises,
       [category]: []
     }), {})
-    
+
     return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
       const { muscles } = exercise;
       exercises[muscles] = [...exercises[muscles], exercise]
@@ -23,28 +24,30 @@ export default class App extends Component {
     }, initExercises))
   }
 
-  handleCategorySelect = (category) => {
+  handleCategorySelect = (category) =>
     this.setState(() => ({ category }))
-  }
 
-  handleExerciseSelected = (id) => {
+  handleExerciseSelected = (id) =>
     this.setState(({ exercises }) => ({ exercise: exercises.find((ex) => id === ex.id) }))
-  }
 
-  handleCreateExercise = (exercise) => {
+  handleCreateExercise = (exercise) =>
     this.setState(({ exercises }) => ({
       exercises: [
         ...exercises,
         exercise
       ]
     }))
-  }
 
-  handleDeleteExercise = id => {
-    this.setState(({exercises}) => ({
+  handleDeleteExercise = id =>
+    this.setState(({ exercises }) => ({
       exercises: exercises.filter((ex) => ex.id !== id)
     }))
-  }
+
+  handleSelectEdit = id =>
+    this.setState(({ }) => ({
+      exercise: exercises.find((ex) => id === ex.id),
+      editMode: true
+    }))
 
   render() {
     const category = this.state.category;
@@ -53,12 +56,13 @@ export default class App extends Component {
       <Fragment>
         <Header muscles={muscles} handleCreateExercise={this.handleCreateExercise} />
 
-        <Exercises 
-          exercises={this.getExercisesByMuscles()} 
-          category={category} 
-          exercise={this.state.exercise} 
+        <Exercises
+          exercises={this.getExercisesByMuscles()}
+          category={category}
+          exercise={this.state.exercise}
           onSelect={this.handleExerciseSelected}
           onDelete={this.handleDeleteExercise}
+          onSelectEdit={this.handleSelectEdit}
         />
 
         <Footer muscles={muscles} category={category} handleCategorySelect={this.handleCategorySelect} />
