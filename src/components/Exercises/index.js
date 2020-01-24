@@ -1,68 +1,48 @@
-import React, { Fragment } from "react"
-import { Grid, Paper, List, ListItem, Typography, ListItemText, ListItemSecondaryAction, IconButton } from "@material-ui/core"
-import DeleteIcon from "@material-ui/icons/Delete"
-import Edit from "@material-ui/icons/Edit"
+import React from "react"
+import { Grid, Paper, Typography, List, ListItem, ListItemText } from "@material-ui/core"
 
-const styles = {
-    Paper: {
-        padding: 20,
-        marginTop: 10,
-        marginBottom: 10,
-        height: 500,
-        overflowY: "auto"
+const Exercises = ({ exercises }) => {
+    const styles = {
+        Paper: {
+            marginTop: "10px",
+            marginBottom: "10px",
+            padding: "20px",
+            height: "500px",
+            overflowY: "auto"
+        }
     }
-}
-
-export default ({
-    exercises,
-    category,
-    onSelect,
-    exercise: {
-        id,
-        title = "Welcome",
-        description = "Please select an exercise from the list on the left."
-    },
-    onDelete,
-    onSelectEdit
-}) => (
-        <Grid container spacing={2}>
+    return (
+        <Grid container sm spacing={2}>
             <Grid item sm>
                 <Paper style={styles.Paper}>
-                    {exercises.map(([group, exercises]) => (
-                        !category || category === group ?
-                            <Fragment l>
-                                <Typography variant="h6" style={{ textTransform: "capitalize" }}>
-                                    {group}
+                    {exercises.map(([muscles, exercises]) => {
+                        return (
+                            <React.Fragment>
+                                <Typography
+                                    variant="h6"
+                                >
+                                    {muscles}
                                 </Typography>
-                                <List component="ul">
-                                    {exercises.map(({ title, id }) => (
-                                        <ListItem button onClick={() => onSelect(id)}>
-                                            <ListItemText primary={title} />
-                                            <ListItemSecondaryAction>
-                                                <IconButton edge="end" aria-label="comments" onClick={() => onSelectEdit(id)}>
-                                                    <Edit />
-                                                </IconButton>
-                                                <IconButton edge="end" aria-label="comments" onClick={() => onDelete(id)}>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
-                                    ))}
+                                <List component="ul" aria-label="muscles">
+                                    {exercises.map(exercise => {
+                                        return (
+                                            <ListItem button>
+                                                <ListItemText primary={exercise.title} />
+                                            </ListItem>
+                                        )
+                                    })}
                                 </List>
-                            </Fragment>
-                            : null
-                    ))}
+                            </React.Fragment>
+                        )
+                    })}
                 </Paper>
             </Grid>
             <Grid item sm>
                 <Paper style={styles.Paper}>
-                    <Typography variant="h5">
-                        {title}
-                    </Typography>
-                    <Typography variant="body1" style={{ marginTop: 20 }}>
-                        {description}
-                    </Typography>
+                    Right side
                 </Paper>
             </Grid>
-        </Grid >
+        </Grid>
     )
+}
+export default Exercises

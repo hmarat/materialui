@@ -1,31 +1,23 @@
-import React from 'react';
+import React from "react"
 import { Paper, Tabs, Tab } from "@material-ui/core"
+import { muscles } from "../../store"
 
-const Footer = ({ muscles, category, handleCategorySelect }) => {
-  const index = category ? muscles.findIndex((muscle) => muscle === category) + 1 : 0;
-
-  const onSelect = (e, index) => {
-    const category = index === 0 ? "" : muscles[index - 1];
-    handleCategorySelect(category);
-  }
-
-  return (
-    <Paper>
-      <Tabs
-        value={index}
-        indicatorColor="primary"
-        textColor="primary"
-        centered
-        onChange={onSelect}
-      >
-        <Tab label="All" />
-        {muscles.map(muscle => (
-          <Tab label={muscle} />
-        ))}
-      </Tabs>
-    </Paper>
-  )
-
+export const Footer = props => {
+    return (
+        <Paper>
+            <Tabs
+                value={0}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+            >
+                <Tab label="All" />
+                {muscles.map(muscle => {
+                    return (
+                        <Tab label={muscle} />
+                    )
+                })}
+            </Tabs>
+        </Paper>
+    )
 }
-
-export default Footer
